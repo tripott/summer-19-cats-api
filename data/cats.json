@@ -1,0 +1,47 @@
+[
+  {
+    "id": "breed_tabby",
+    "type": "breed",
+    "description": "Tabby are neat."
+  },
+  {
+    "id": "breed_siamese",
+    "type": "breed",
+    "description": "Siamese look neat."
+  },
+  {
+    "id": "breed_minx",
+    "type": "breed",
+    "description": "Minx are mean!"
+  },
+  {
+    "id": "cat_tootles",
+    "type": "cat",
+    "name": "Tootles",
+    "breed": "tabby",
+    "owner": "Trip",
+    "age": 15,
+    "isDeceased": false,
+    "vaccinations": []
+  },
+  {
+    "id": "cat_jerry",
+    "type": "cat",
+    "name": "Jerry",
+    "breed": "tabby",
+    "owner": "Steve Martin",
+    "age": 2,
+    "isDeceased": false,
+    "vaccinations": ["rabies", "cat fever"]
+  },
+  {
+    "id": "cat_tom",
+    "type": "cat",
+    "name": "Tom",
+    "breed": "minx",
+    "owner": "Judy",
+    "age": 6,
+    "isDeceased": true,
+    "vaccinations": ["rabies"]
+  }
+]
