@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 const sluggo = require('./lib/sluggo')
 // app.use(bodyParser.json())
 
+const cors = require('cors')
+app.use(cors())
+
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to all the cats. Meow.')
 })
@@ -103,6 +106,8 @@ app.post('/cats', bodyParser.json(), (req, res) => {
 
   res.status(201).send({ id: catToAdd.id, ok: true })
 })
+
+//app.delete('/cats/:catId' /* delete a cat */)
 
 app.listen(
   process.env.PORT || 5555,
