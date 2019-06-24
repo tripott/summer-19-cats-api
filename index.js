@@ -52,6 +52,15 @@ app.get('/cats', (req, res) =>
     )
 )
 
+// get a cat from the collection of cats
+app.get('/cats/:catId', (req, res) => {
+  function findCatById(item) {
+    return item.id === req.params.catId
+  }
+
+  res.status(200).send(catsDatabase.find(findCatById))
+})
+
 app.get('/breeds', (req, res) =>
   res.status(200).send(catsDatabase.filter(item => item.type === 'breed'))
 )
