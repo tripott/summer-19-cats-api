@@ -3,8 +3,8 @@ const express = require('express')
 const app = express()
 const catsDatabase = require('./data/cats.json')
 const bodyParser = require('body-parser')
-
-app.use(bodyParser.json())
+const sluggo = require('./lib/sluggo')
+// app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to all the cats. Meow.')
@@ -55,7 +55,7 @@ app.get('/cats', (req, res) =>
 // get a cat from the collection of cats
 app.get('/cats/:catId', (req, res) => {
   function findCatById(item) {
-    return item.id === req.params.catId
+    return item.type === 'cat' && item.id === req.params.catId
   }
 
   res.status(200).send(catsDatabase.find(findCatById))
@@ -64,6 +64,45 @@ app.get('/cats/:catId', (req, res) => {
 app.get('/breeds', (req, res) =>
   res.status(200).send(catsDatabase.filter(item => item.type === 'breed'))
 )
+
+app.get(
+  '/foo',
+  (req, res, next) => {
+    req.foo = 'bar'
+    next()
+  },
+  (req, res, next) => {
+    req.foo = req.foo + 'foo2u2'
+    next()
+  },
+  (req, res) => res.status(200).send(req.foo)
+)
+
+//app.get('/foo', (req, res) => res.status(200).send('helloooo'))
+
+// get a breed from the collection of breeds
+//bodyParser.json()
+app.get('/breeds/:breedId', (req, res) => {
+  res
+    .status(200)
+    .send(
+      catsDatabase.find(
+        item => item.type === 'breed' && item.id === req.params.breedId
+      )
+    )
+})
+
+app.post('/cats', bodyParser.json(), (req, res) => {
+  // catsDatabase.  <= add req.body into catsDatabase
+  const catToAdd = req.body
+  // add an id property with a specific value: "cat_jeff"
+  // add a type property with a value of "cat"
+  catToAdd.type = 'cat'
+  catToAdd.id = 'cat_' + sluggo(catToAdd.name)
+  catsDatabase.push(catToAdd)
+
+  res.status(201).send({ id: catToAdd.id, ok: true })
+})
 
 app.listen(
   process.env.PORT || 5555,
